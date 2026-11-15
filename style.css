@@ -5,7 +5,7 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: Manrop
 a { color: inherit; text-decoration: none; border-bottom: 1px solid #767676; }
 a:hover { color: #fff; border-color: #fff; }
 main { max-width: 790px; margin: 0 auto; padding: 44px 28px 30px; }
-nav { display: flex; gap: 22px; font: 12px "DM Mono", monospace; }
+nav { display: flex; flex-wrap: wrap; gap: 22px; font: 12px "DM Mono", monospace; }
 nav a { border: 0; color: var(--muted); } nav a:hover { color: var(--text); }
 .intro { position: relative; padding: 74px 0 78px; }
 .title-line { display: flex; align-items: baseline; gap: 9px; }.title-line span { color: #b1b1ae; font: 11px "DM Mono", monospace; }
@@ -14,5 +14,6 @@ h1, h2, h3, p { margin-top: 0; } h1 { margin-bottom: 0; font-size: 28px; letter-
 section:not(.intro) { padding: 42px 0; border-top: 1px solid var(--line); } h2 { margin-bottom: 25px; font-size: 19px; letter-spacing: -.035em; } h2::first-letter { color: #d2d2cf; }
 .list { display: grid; gap: 5px; }.list article { display: flex; justify-content: space-between; gap: 24px; padding: 13px 0; border-bottom: 1px solid var(--line); }.list h3, .project h3 { margin-bottom: 4px; font-size: 15px; font-weight: 600; letter-spacing: -.02em; }.list p, time, .meta { margin: 0; color: var(--muted); font-size: 12px; }.list .detail { max-width: 520px; margin-top: 8px; color: #d7d7d4; line-height: 1.6; }.list time { padding-top: 4px; white-space: nowrap; }
 .project { padding: 3px 0 8px; }.project p { max-width: 650px; color: #d7d7d4; font-size: 14px; line-height: 1.75; }.project .meta { margin-top: 18px; font: 11px "DM Mono", monospace; }.project-link { display: inline-block; margin-top: 18px; font: 11px "DM Mono", monospace; }
+.skill-list, .achievements { max-width: 680px; margin: 0; color: #d7d7d4; font-size: 14px; line-height: 1.8; }.achievements { padding-left: 18px; }.achievements li + li { margin-top: 8px; }
 footer { padding-top: 25px; border-top: 1px solid var(--line); color: var(--muted); font: 10px "DM Mono", monospace; }
 @media (max-width: 600px) { main { padding: 28px 20px; } nav { gap: 13px; font-size: 10px; }.intro { padding: 60px 0; }.title-line { display: block; }.title-line span { display: block; margin-top: 8px; }.location { position: static; margin: 22px 0 0; }.intro > p:not(.location) { margin-top: 22px; font-size: 15px; }.list article { display: block; }.list time { display: block; margin-top: 7px; }.list h3 { font-size: 14px; } }

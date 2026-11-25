@@ -17,6 +17,37 @@ const maxBombs = 3;
 const bombRefillSeconds = 10;
 const decks = [[0, 100, 46], [12, 40, 36], [59, 88, 36], [36, 65, 26], [8, 31, 17], [69, 94, 17]];
 let game, frame, lastTime;
+let audioContext;
+
+function enableAudio() {
+  const AudioEngine = window.AudioContext || window.webkitAudioContext;
+  if (!AudioEngine) return;
+  audioContext ||= new AudioEngine();
+  if (audioContext.state === "suspended") audioContext.resume();
+}
+
+function playSound(kind) {
+  if (!audioContext) return;
+  const sounds = {
+    fire: { wave: "square", from: 420, to: 160, duration: 0.07, volume: 0.035 },
+    enemy: { wave: "sine", from: 210, to: 95, duration: 0.12, volume: 0.05 },
+    bomb: { wave: "sawtooth", from: 130, to: 38, duration: 0.35, volume: 0.08 },
+    player: { wave: "triangle", from: 300, to: 55, duration: 0.45, volume: 0.09 }
+  };
+  const sound = sounds[kind];
+  if (!sound) return;
+  const now = audioContext.currentTime;
+  const oscillator = audioContext.createOscillator();
+  const gain = audioContext.createGain();
+  oscillator.type = sound.wave;
+  oscillator.frequency.setValueAtTime(sound.from, now);
+  oscillator.frequency.exponentialRampToValueAtTime(sound.to, now + sound.duration);
+  gain.gain.setValueAtTime(sound.volume, now);
+  gain.gain.exponentialRampToValueAtTime(0.001, now + sound.duration);
+  oscillator.connect(gain).connect(audioContext.destination);
+  oscillator.start(now);
+  oscillator.stop(now + sound.duration);
+}
 
 function restartGame() {
   cancelAnimationFrame(frame);
@@ -42,6 +73,7 @@ function shoot() {
   const p = game.player;
   game.shots.push({ x: p.x + p.face * 2, y: p.y - 1, dx: p.face * 85 });
   game.cooldown = 0.19;
+  playSound("fire");
 }
 
 function throwBomb() {
@@ -91,6 +123,7 @@ function step(dt) {
     if (hit < 0) return s.x > 0 && s.x < 100;
     game.enemies.splice(hit, 1);
     game.kills++;
+    playSound("enemy");
     return false;
   });
   game.blasts = game.blasts.filter(b => (b.life -= dt) > 0);
@@ -102,12 +135,16 @@ function step(dt) {
     if (b.fuse > 0) return true;
     const before = game.enemies.length;
     game.enemies = game.enemies.filter(e => Math.hypot(e.x - b.x, e.y - b.y) > 12);
-    game.kills += before - game.enemies.length;
+    const destroyed = before - game.enemies.length;
+    game.kills += destroyed;
     game.blasts.push({ x: b.x, y: b.y, life: 0.28 });
+    playSound("bomb");
+    if (destroyed) playSound("enemy");
     return false;
   });
   if (game.enemies.some(e => Math.hypot(e.x - p.x, e.y - p.y + 1) < 2.3)) {
     game.alive = false;
+    playSound("player");
   }
 }
 
@@ -156,6 +193,7 @@ function tick(now) {
 }
 
 function openGame() {
+  enableAudio();
   modal.hidden = false;
   document.body.classList.add("game-active");
   restartGame();

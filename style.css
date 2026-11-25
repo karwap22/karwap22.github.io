@@ -1,10 +1,11 @@
 :root { --bg: #191919; --text: #f7f7f5; --muted: #9b9b9b; --line: #373737; }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-body { margin: 0; background: var(--bg); color: var(--text); font-family: Manrope, sans-serif; }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: Manrope, sans-serif; } body.game-active main { display: none; }
 a { color: inherit; text-decoration: none; border-bottom: 1px solid #767676; }
 a:hover { color: #fff; border-color: #fff; }
 main { max-width: 790px; margin: 0 auto; padding: 44px 28px 30px; }
+.bored-button { position: fixed; z-index: 2; top: 26px; right: 28px; padding: 9px 11px; border: 1px solid var(--line); border-radius: 0; background: var(--bg); color: var(--muted); cursor: pointer; font: 11px "DM Mono", monospace; }.bored-button:hover { color: var(--text); border-color: var(--muted); }.bored-button span { color: var(--text); }
 nav { display: flex; flex-wrap: wrap; gap: 22px; font: 12px "DM Mono", monospace; }
 nav a { border: 0; color: var(--muted); } nav a:hover { color: var(--text); }
 .intro { position: relative; padding: 74px 0 78px; }
@@ -16,4 +17,10 @@ section:not(.intro) { padding: 42px 0; border-top: 1px solid var(--line); } h2 {
 .project { padding: 3px 0 8px; }.project p { max-width: 650px; color: #d7d7d4; font-size: 14px; line-height: 1.75; }.project .meta { margin-top: 18px; font: 11px "DM Mono", monospace; }.project-link { display: inline-block; margin-top: 18px; font: 11px "DM Mono", monospace; }
 .skill-list, .achievements { max-width: 680px; margin: 0; color: #d7d7d4; font-size: 14px; line-height: 1.8; }.achievements { padding-left: 18px; }.achievements li + li { margin-top: 8px; }
 footer { padding-top: 25px; border-top: 1px solid var(--line); color: var(--muted); font: 10px "DM Mono", monospace; }
-@media (max-width: 600px) { main { padding: 28px 20px; } nav { gap: 13px; font-size: 10px; }.intro { padding: 60px 0; }.title-line { display: block; }.title-line span { display: block; margin-top: 8px; }.location { position: static; margin: 22px 0 0; }.intro > p:not(.location) { margin-top: 22px; font-size: 15px; }.list article { display: block; }.list time { display: block; margin-top: 7px; }.list h3 { font-size: 14px; } }
+.game-modal { display: grid; min-height: 100svh; background: #111; }.game-modal[hidden] { display: none; }.game-window { display: grid; grid-template-rows: auto 1fr auto; width: 100%; min-height: 100svh; background: #111; }.game-topbar, .game-bottom { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 28px; border-bottom: 1px solid #393936; color: #aaa; font: 12px "DM Mono", monospace; }.game-topbar p { margin: 0; }.game-topbar p span { color: #73736f; }.game-topbar button, .game-bottom button { border: 0; background: transparent; color: #aaa; cursor: pointer; font: inherit; }.game-topbar button { font-size: 25px; line-height: 12px; }.game-topbar button:hover, .game-bottom button:hover { color: #fff; }.game-bottom { border-top: 1px solid #393936; border-bottom: 0; }.game-bottom span { color: #73736f; }.game-window pre { display: grid; place-items: center; overflow: hidden; margin: 0; padding: 20px; color: #f2eee5; font: clamp(10px, 2.2vw, 28px)/1.3 "DM Mono"; letter-spacing: .05em; user-select: none; }.game-window pre:focus { outline: 1px solid #74746f; outline-offset: -10px; }
+@media (max-width: 600px) { main { padding: 28px 20px; } .bored-button { top: 20px; right: 20px; font-size: 10px; } nav { max-width: 230px; gap: 13px; font-size: 10px; }.intro { padding: 60px 0; }.title-line { display: block; }.title-line span { display: block; margin-top: 8px; }.location { position: static; margin: 22px 0 0; }.intro > p:not(.location) { margin-top: 22px; font-size: 15px; }.list article { display: block; }.list time { display: block; margin-top: 7px; }.list h3 { font-size: 14px; }.game-window pre { letter-spacing: 0; } .game-bottom span { font-size: 9px; } }
+.game-active section#game-modal { position: fixed; inset: 0; padding: 0; border: 0; z-index: 10; }
+#game-modal .game-window { min-height: 0; height: 100%; grid-template-rows: auto minmax(0, 1fr) auto; }
+#game-board { width: 100%; height: 100%; display: block; min-height: 0; outline-offset: -2px; }
+#game-modal .game-topbar button { font: inherit; }
+#game-status { color: #ddd8c9; text-align: center; }

@@ -18,7 +18,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style.css?v=night-shift" />
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-WBERD70BZB"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -26,13 +26,14 @@
       gtag("js", new Date());
       gtag("config", "G-WBERD70BZB");
     </script>
-    <script src="script.js" defer></script>
+    <script src="script.js?v=night-shift" defer></script>
     <script type="application/ld+json">
       {"@context":"https://schema.org","@type":"Person","name":"Paawan Karwa","url":"https://karwap22.github.io/","jobTitle":"Software Engineer 2 - Data & AI","knowsAbout":["Agentic AI","LLM orchestration","RAG","Backend engineering"],"sameAs":["https://github.com/karwap22","https://www.linkedin.com/in/paawan-karwa"]}
     </script>
   </head>
   <body>
     <main>
+      <button class="bored-button" id="open-game" type="button" onclick="openGame()">Feeling bored? <span>↗</span></button>
       <nav aria-label="Primary navigation">
         <a href="#home">[h] home</a>
         <a href="#projects">[p] projects</a>
@@ -92,5 +93,12 @@
 
       <footer>© 2026 Paawan Karwa</footer>
     </main>
+    <section class="game-modal" id="game-modal" role="dialog" aria-modal="true" aria-labelledby="game-title" hidden>
+      <div class="game-window">
+        <div class="game-topbar"><p id="game-title">Night Shift</p><span id="game-status"></span><button id="close-game" type="button" aria-keyshortcuts="P" onclick="closeGame()">Portfolio [p]</button></div>
+        <canvas id="game-board" tabindex="0" aria-label="Night Shift platform survival game" aria-describedby="game-help"></canvas>
+        <div class="game-bottom"><span id="game-help">A/D or ←/→ move · W/↑ jump · Space fire · B bomb</span><button type="button" onclick="restartGame()">Restart [r]</button></div>
+      </div>
+    </section>
   </body>
 </html>
